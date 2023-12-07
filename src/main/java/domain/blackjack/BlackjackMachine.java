@@ -8,6 +8,7 @@ import java.util.List;
 
 public class BlackjackMachine {
     private List<Player> players;
+    private int turnOfPlayer;
     private List<Card> cards;
     private boolean[] usedCards;
     private Dealer dealer;
@@ -17,5 +18,9 @@ public class BlackjackMachine {
         usedCards = new boolean[cards.size()];
         dealer = new Dealer();
         this.players = players;
+    }
+
+    public boolean isPlayerTurn() {
+        return turnOfPlayer < players.size();
     }
 }
