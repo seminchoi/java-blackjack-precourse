@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Random;
 
 public class BlackjackMachine {
+    private static final int INIT_CARDS_COUNT = 2;
     private List<Player> players;
     private int turnOfPlayer;
     private List<Card> cards;
@@ -22,6 +23,18 @@ public class BlackjackMachine {
         usedCards = new boolean[cards.size()];
         dealer = new Dealer();
         this.players = players;
+        initCards();
+    }
+
+    private void initCards() {
+        for (int i = 0; i < INIT_CARDS_COUNT; i++) {
+            dealer.addCard(drawCard());
+        }
+        for (Player player : players) {
+            for (int i = 0; i < 2; i++) {
+                player.addCard(drawCard());
+            }
+        }
     }
 
     public boolean isPlayerTurn() {
