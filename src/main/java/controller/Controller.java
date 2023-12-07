@@ -2,6 +2,7 @@ package controller;
 
 import domain.blackjack.BlackjackMachine;
 import domain.user.Player;
+import dto.ResultDto;
 import dto.UserDto;
 import view.InputView;
 import view.OutputView;
@@ -29,6 +30,7 @@ public class Controller {
         final BlackjackMachine blackjackMachine = initBlackjackMachine();
         doPlayerTurn(blackjackMachine);
         doDealerTurn(blackjackMachine);
+        makeResult(blackjackMachine);
     }
 
     private BlackjackMachine initBlackjackMachine() {
@@ -131,15 +133,21 @@ public class Controller {
 
     private void doPlayerTurn(final BlackjackMachine blackjackMachine) {
         while (blackjackMachine.isPlayerTurn()) {
-            try {
-                final Player player = blackjackMachine.getCurrentPlayer();
-                boolean intention = inputView.readIntention(player.getName());
-                blackjackMachine.giveCardToPlayer(intention);
+            doPlayerTurnIfValid(blackjackMachine);
+        }
+    }
+
+    private void doPlayerTurnIfValid(final BlackjackMachine blackjackMachine) {
+        try {
+            final Player player = blackjackMachine.getCurrentPlayer();
+            boolean intention = inputView.readIntention(player.getName());
+            blackjackMachine.giveCardToPlayer(intention);
+            if(intention) {
                 outputView.printUserStatus(new UserDto(player));
             }
-            catch (IllegalArgumentException e) {
-                outputView.printError(e);
-            }
+        }
+        catch (IllegalArgumentException e) {
+            outputView.printError(e);
         }
     }
 
@@ -148,5 +156,26 @@ public class Controller {
             blackjackMachine.giveCardToDealer();
             outputView.printDealerTurnStatus();
         }
+    }
+
+    private void makeResult(final BlackjackMachine blackjackMachine) {
+        makeUsersResult(blackjackMachine);
+        makeUsersBenefit(blackjackMachine);
+    }
+
+    private void makeUsersResult(final BlackjackMachine blackjackMachine) {
+        final List<ResultDto> resultDtos = new ArrayList<>();
+        resultDtos.add(new ResultDto(blackjackMachine.getDealer()));
+
+        List<Player> players = blackjackMachine.getPlayers();
+        for (Player player : players) {
+            resultDtos.add(new ResultDto(player));
+        }
+
+        outputView.printUsersResult(resultDtos);
+    }
+
+    private void makeUsersBenefit(final BlackjackMachine blackjackMachine) {
+        outputView.printUsersBenefit(blackjackMachine.calculateBenefits());
     }
 }

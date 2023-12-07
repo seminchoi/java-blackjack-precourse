@@ -12,6 +12,11 @@ public class UserDto {
     private final String name;
     private final List<CardDto> cards;
 
+    public UserDto(String name, List<CardDto> cards) {
+        this.name = name;
+        this.cards = cards;
+    }
+
     public UserDto(Dealer dealer) {
         this.name = "딜러";
         this.cards = Collections.singletonList(new CardDto(dealer.getFirstCard()));
