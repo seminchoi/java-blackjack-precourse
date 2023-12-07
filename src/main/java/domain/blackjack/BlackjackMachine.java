@@ -5,6 +5,7 @@ import domain.card.CardFactory;
 import domain.user.Dealer;
 import domain.user.Player;
 import java.util.List;
+import java.util.Random;
 
 public class BlackjackMachine {
     private List<Player> players;
@@ -23,4 +24,41 @@ public class BlackjackMachine {
     public boolean isPlayerTurn() {
         return turnOfPlayer < players.size();
     }
+
+    public Player getCurrentPlayer() {
+        return players.get(turnOfPlayer);
+    }
+
+    public void giveCardToPlayer(final boolean wantToTakeCard) {
+        if(!wantToTakeCard) {
+            turnOfPlayer++;
+            return;
+        }
+
+        giveCardToPlayer();
+    }
+
+    private void giveCardToPlayer() {
+        Player player = players.get(turnOfPlayer);
+        player.addCard(drawCard());
+        if(player.isBust()) {
+            turnOfPlayer++;
+        }
+    }
+
+    private Card drawCard() {
+        Card card = null;
+        while (card == null) {
+            Random random = new Random();
+            int index = random.nextInt(cards.size());
+            if(!usedCards[index]) {
+                card = cards.get(index);
+                usedCards[index] = true;
+            }
+        }
+
+        return card;
+    }
+
+    public
 }
