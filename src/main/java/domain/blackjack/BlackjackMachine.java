@@ -74,7 +74,7 @@ public class BlackjackMachine {
     public List<Benefit> calculateBenefits() {
         final List<Benefit> benefits = new ArrayList<>();
         for (final Player player : players) {
-            calculateBenefit(player);
+            benefits.add(calculateBenefit(player));
         }
         benefits.add(0, new Benefit("딜러", calculateDealerBenefit(benefits)));
         return benefits;
