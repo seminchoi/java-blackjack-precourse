@@ -1,8 +1,6 @@
 package domain.blackjack;
 
 import domain.card.Card;
-import domain.card.Symbol;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,13 +30,21 @@ public class BlackjackCards {
     }
 
     private int calculateMaxScore(final int totalScore, final boolean containAce) {
-        if(isRequiredAceBonusScore(totalScore, containAce)) {
-                return totalScore + ACE_BONUS_SCORE;
+        if (isRequiredAceBonusScore(totalScore, containAce)) {
+            return totalScore + ACE_BONUS_SCORE;
         }
         return totalScore;
     }
 
     private boolean isRequiredAceBonusScore(final int totalScore, final boolean containAce) {
-        return (containAce) && (totalScore + ACE_BONUS_SCORE <= MAX_SCORE);
+        return (containAce) && !isBust(totalScore + ACE_BONUS_SCORE);
+    }
+
+    public boolean isBust() {
+        return isBust(calculateScore());
+    }
+
+    private boolean isBust(final int score) {
+        return score > MAX_SCORE;
     }
 }
