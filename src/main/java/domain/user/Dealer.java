@@ -1,5 +1,6 @@
 package domain.user;
 
+import domain.blackjack.BlackjackCards;
 import domain.card.Card;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.List;
  * 게임 딜러를 의미하는 객체
  */
 public class Dealer {
-    private final List<Card> cards = new ArrayList<>();
+    private final BlackjackCards cards = new BlackjackCards();
 
     public Dealer() {}
 
@@ -17,5 +18,19 @@ public class Dealer {
         cards.add(card);
     }
 
-    // TODO 추가 기능 구현
+    public boolean isBust() {
+        return cards.isBust();
+    }
+
+    public int calculateScore() {
+        return cards.calculateScore();
+    }
+
+    public Card getFirstCard() {
+        return cards.getFirstCard();
+    }
+
+    public List<Card> getCards() {
+        return cards.getCards();
+    }
 }
