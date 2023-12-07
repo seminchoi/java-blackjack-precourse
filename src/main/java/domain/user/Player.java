@@ -38,4 +38,12 @@ public class Player {
     public List<Card> getCards() {
         return cards.getCards();
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getBettingMoney() {
+        return bettingMoney;
+    }
 }
