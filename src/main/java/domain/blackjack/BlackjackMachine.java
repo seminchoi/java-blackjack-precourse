@@ -4,6 +4,9 @@ import domain.card.Card;
 import domain.card.CardFactory;
 import domain.user.Dealer;
 import domain.user.Player;
+import dto.Benefit;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -30,7 +33,7 @@ public class BlackjackMachine {
     }
 
     public void giveCardToPlayer(final boolean wantToTakeCard) {
-        if(!wantToTakeCard) {
+        if (!wantToTakeCard) {
             turnOfPlayer++;
             return;
         }
@@ -41,7 +44,7 @@ public class BlackjackMachine {
     private void giveCardToPlayer() {
         Player player = players.get(turnOfPlayer);
         player.addCard(drawCard());
-        if(player.isBust()) {
+        if (player.isBust()) {
             turnOfPlayer++;
         }
     }
@@ -59,12 +62,69 @@ public class BlackjackMachine {
         while (card == null) {
             Random random = new Random();
             int index = random.nextInt(cards.size());
-            if(!usedCards[index]) {
+            if (!usedCards[index]) {
                 card = cards.get(index);
                 usedCards[index] = true;
             }
         }
 
         return card;
+    }
+
+    public List<Benefit> calculateBenefits() {
+        final List<Benefit> benefits = new ArrayList<>();
+        for (final Player player : players) {
+            calculateBenefit(player);
+        }
+        benefits.add(0, new Benefit("딜러", calculateDealerBenefit(benefits)));
+        return benefits;
+    }
+
+    private Benefit calculateBenefit(final Player player) {
+        if (isPlayerBlackJackOnly(player)) {
+            return new Benefit(player.getName(), player.getBettingMoney() * 1.5D);
+        }
+        if (isPlayerWin(player)) {
+            return new Benefit(player.getName(), player.getBettingMoney());
+        }
+        if(isPlayerDraw(player)) {
+            return new Benefit(player.getName(), 0D);
+        }
+        if(isPlayerLose(player)) {
+            return new Benefit(player.getName(), player.getBettingMoney() * (-1D));
+        }
+        throw new InternalError("수익 계산 중 오류가 발생하였습니다.");
+    }
+
+    private boolean isPlayerBlackJackOnly(final Player player) {
+        return player.isBlackjack() && !dealer.isBlackjack();
+    }
+
+    private boolean isPlayerWin(final Player player) {
+        return !player.isBust() && (dealer.isBust() || dealer.calculateScore() < player.calculateScore());
+    }
+
+    private boolean isPlayerDraw(final Player player) {
+        return !player.isBust() && (player.calculateScore() == dealer.calculateScore());
+    }
+
+    private boolean isPlayerLose(final Player player) {
+        return player.isBust() || (!dealer.isBust() && dealer.calculateScore() > player.calculateScore());
+    }
+
+    private double calculateDealerBenefit(final List<Benefit> benefits) {
+        double dealerBenefit = 0;
+        for (Benefit benefit : benefits) {
+            dealerBenefit += benefit.getAmount();
+        }
+        return dealerBenefit;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public Dealer getDealer() {
+        return dealer;
     }
 }

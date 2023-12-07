@@ -39,4 +39,8 @@ public class Dealer {
     public List<Card> getCards() {
         return cards.getCards();
     }
+
+    public boolean isBlackjack() {
+        return cards.isBlackjack();
+    }
 }

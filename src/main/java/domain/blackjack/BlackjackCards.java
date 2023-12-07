@@ -49,6 +49,9 @@ public class BlackjackCards {
         return score > MAX_SCORE;
     }
 
+    public boolean isBlackjack() {
+        return calculateScore() == MAX_SCORE;
+    }
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }

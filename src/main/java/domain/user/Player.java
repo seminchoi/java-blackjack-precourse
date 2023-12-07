@@ -37,6 +37,10 @@ public class Player {
         return cards.isBust();
     }
 
+    public boolean isBlackjack() {
+        return cards.isBlackjack();
+    }
+
     public int calculateScore() {
         return cards.calculateScore();
     }
