@@ -10,6 +10,8 @@ import java.util.List;
  * 게임 딜러를 의미하는 객체
  */
 public class Dealer {
+    private static final int CARD_RECEIVE_THRESHOLD = 16;
+
     private final BlackjackCards cards = new BlackjackCards();
 
     public Dealer() {}
@@ -20,6 +22,10 @@ public class Dealer {
 
     public boolean isBust() {
         return cards.isBust();
+    }
+
+    public boolean canReceiveCard() {
+        return calculateScore() <= CARD_RECEIVE_THRESHOLD;
     }
 
     public int calculateScore() {

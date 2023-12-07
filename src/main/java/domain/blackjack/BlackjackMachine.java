@@ -46,6 +46,14 @@ public class BlackjackMachine {
         }
     }
 
+    public boolean dealerCanReceiveMoreCard() {
+        return dealer.canReceiveCard();
+    }
+
+    public void giveCardToDealer() {
+        dealer.addCard(drawCard());
+    }
+
     private Card drawCard() {
         Card card = null;
         while (card == null) {
@@ -59,6 +67,4 @@ public class BlackjackMachine {
 
         return card;
     }
-
-    public
 }
