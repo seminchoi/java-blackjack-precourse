@@ -2,6 +2,7 @@ package domain.blackjack;
 
 import domain.card.Card;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class BlackjackCards {
@@ -10,7 +11,7 @@ public class BlackjackCards {
 
     private final List<Card> cards = new ArrayList<>();
 
-    public void addCard(final Card card) {
+    public void add(final Card card) {
         cards.add(card);
     }
 
@@ -46,5 +47,13 @@ public class BlackjackCards {
 
     private boolean isBust(final int score) {
         return score > MAX_SCORE;
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
+    }
+
+    public Card getFirstCard() {
+        return cards.get(0);
     }
 }
