@@ -1,6 +1,8 @@
 package controller;
 
+import domain.blackjack.BlackjackMachine;
 import domain.user.Player;
+import dto.UserDto;
 import view.InputView;
 import view.OutputView;
 
@@ -23,12 +25,38 @@ public class Controller {
         this.outputView = outputView;
     }
 
-    private void initPlayers() {
+    public void run() {
+        final BlackjackMachine blackjackMachine = initBlackjackMachine();
+        doPlayerTurn(blackjackMachine);
+        doDealerTurn(blackjackMachine);
+    }
+
+    private BlackjackMachine initBlackjackMachine() {
+        final List<Player> players = initPlayers();
+        final BlackjackMachine blackjackMachine = new BlackjackMachine();
+        blackjackMachine.init(players);
+        printInitStatus(blackjackMachine);
+        return blackjackMachine;
+    }
+
+    private void printInitStatus(final BlackjackMachine blackjackMachine) {
+        final List<UserDto> userDtos = new ArrayList<>();
+        userDtos.add(new UserDto(blackjackMachine.getDealer()));
+        final List<Player> players = blackjackMachine.getPlayers();
+        for (final Player player : players) {
+            userDtos.add(new UserDto(player));
+        }
+        outputView.printInitStatus(userDtos);
+    }
+
+    private List<Player> initPlayers() {
         List<String> names = initPlayerNames();
         List<Player> players = new ArrayList<>();
         for (String name : names) {
             addPlayer(players, name);
         }
+        return players;
+
     }
 
     private List<String> initPlayerNames() {
@@ -99,5 +127,26 @@ public class Controller {
         }
 
         return false;
+    }
+
+    private void doPlayerTurn(final BlackjackMachine blackjackMachine) {
+        while (blackjackMachine.isPlayerTurn()) {
+            try {
+                final Player player = blackjackMachine.getCurrentPlayer();
+                boolean intention = inputView.readIntention(player.getName());
+                blackjackMachine.giveCardToPlayer(intention);
+                outputView.printUserStatus(new UserDto(player));
+            }
+            catch (IllegalArgumentException e) {
+                outputView.printError(e);
+            }
+        }
+    }
+
+    private void doDealerTurn(final BlackjackMachine blackjackMachine) {
+        while (blackjackMachine.dealerCanReceiveMoreCard()) {
+            blackjackMachine.giveCardToDealer();
+            outputView.printDealerTurnStatus();
+        }
     }
 }

@@ -23,4 +23,17 @@ public class InputView {
             throw new IllegalArgumentException("숫자만 입력 가능합니다.");
         }
     }
+
+    public boolean readIntention(final String name) {
+        System.out.printf("\n%s는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", name);
+        String input = scanner.next();
+        input = input.trim();
+        if(input.equalsIgnoreCase("y")) {
+            return true;
+        }
+        if(input.equalsIgnoreCase("n")) {
+            return false;
+        }
+        throw new IllegalArgumentException("y또는 n으로만 입력해주세요");
+    }
 }

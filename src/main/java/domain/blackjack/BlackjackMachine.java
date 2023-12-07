@@ -4,8 +4,7 @@ import domain.card.Card;
 import domain.card.CardFactory;
 import domain.user.Dealer;
 import domain.user.Player;
-import dto.Benefit;
-
+import dto.BenefitDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -84,27 +83,27 @@ public class BlackjackMachine {
         return card;
     }
 
-    public List<Benefit> calculateBenefits() {
-        final List<Benefit> benefits = new ArrayList<>();
+    public List<BenefitDto> calculateBenefits() {
+        final List<BenefitDto> benefitDtos = new ArrayList<>();
         for (final Player player : players) {
-            benefits.add(calculateBenefit(player));
+            benefitDtos.add(calculateBenefit(player));
         }
-        benefits.add(0, new Benefit("딜러", calculateDealerBenefit(benefits)));
-        return benefits;
+        benefitDtos.add(0, new BenefitDto("딜러", calculateDealerBenefit(benefitDtos)));
+        return benefitDtos;
     }
 
-    private Benefit calculateBenefit(final Player player) {
+    private BenefitDto calculateBenefit(final Player player) {
         if (isPlayerBlackJackOnly(player)) {
-            return new Benefit(player.getName(), player.getBettingMoney() * 1.5D);
+            return new BenefitDto(player.getName(), player.getBettingMoney() * 1.5D);
         }
         if (isPlayerWin(player)) {
-            return new Benefit(player.getName(), player.getBettingMoney());
+            return new BenefitDto(player.getName(), player.getBettingMoney());
         }
         if(isPlayerDraw(player)) {
-            return new Benefit(player.getName(), 0D);
+            return new BenefitDto(player.getName(), 0D);
         }
         if(isPlayerLose(player)) {
-            return new Benefit(player.getName(), player.getBettingMoney() * (-1D));
+            return new BenefitDto(player.getName(), player.getBettingMoney() * (-1D));
         }
         throw new InternalError("수익 계산 중 오류가 발생하였습니다.");
     }
@@ -125,10 +124,10 @@ public class BlackjackMachine {
         return player.isBust() || (!dealer.isBust() && dealer.calculateScore() > player.calculateScore());
     }
 
-    private double calculateDealerBenefit(final List<Benefit> benefits) {
+    private double calculateDealerBenefit(final List<BenefitDto> benefitDtos) {
         double dealerBenefit = 0;
-        for (Benefit benefit : benefits) {
-            dealerBenefit += benefit.getAmount();
+        for (BenefitDto benefitDto : benefitDtos) {
+            dealerBenefit += benefitDto.getAmount();
         }
         return dealerBenefit;
     }
