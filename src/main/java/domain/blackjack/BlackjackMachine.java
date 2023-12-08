@@ -127,7 +127,7 @@ public class BlackjackMachine {
     private double calculateDealerBenefit(final List<BenefitDto> benefitDtos) {
         double dealerBenefit = 0;
         for (BenefitDto benefitDto : benefitDtos) {
-            dealerBenefit += benefitDto.getAmount();
+            dealerBenefit -= benefitDto.getAmount();
         }
         return dealerBenefit;
     }
