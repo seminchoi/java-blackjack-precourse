@@ -58,7 +58,6 @@ public class Controller {
             addPlayer(players, name);
         }
         return players;
-
     }
 
     private List<String> initPlayerNames() {
