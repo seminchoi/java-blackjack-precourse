@@ -139,7 +139,7 @@ public class Controller {
     private void doPlayerTurnIfValid(final BlackjackMachine blackjackMachine) {
         try {
             final Player player = blackjackMachine.getCurrentPlayer();
-            boolean intention = inputView.readIntention(player.getName());
+            final boolean intention = inputView.readIntention(player.getName());
             blackjackMachine.giveCardToPlayer(intention);
             if(intention) {
                 outputView.printUserStatus(new UserDto(player));
