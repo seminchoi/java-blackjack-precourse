@@ -15,4 +15,9 @@ public class BenefitDto {
     public double getAmount() {
         return amount;
     }
+
+    @Override
+    public String toString() {
+        return name + ": " + amount;
+    }
 }
