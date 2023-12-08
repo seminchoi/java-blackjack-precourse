@@ -6,7 +6,7 @@ public class InputView {
     private final Scanner scanner = new Scanner(System.in);
     public String readPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입렵하세요.(쉼표 기준으로 분리)");
-        return scanner.next();
+        return scanner.nextLine();
     }
 
     public double readPlayerBettingMoney(String name) {
@@ -15,7 +15,7 @@ public class InputView {
     }
 
     private double readDouble() {
-        String input = scanner.next();
+        String input = scanner.nextLine();
         try {
             return Double.parseDouble(input);
         }
@@ -26,7 +26,7 @@ public class InputView {
 
     public boolean readIntention(final String name) {
         System.out.printf("\n%s는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", name);
-        String input = scanner.next();
+        String input = scanner.nextLine();
         input = input.trim();
         if(input.equalsIgnoreCase("y")) {
             return true;
