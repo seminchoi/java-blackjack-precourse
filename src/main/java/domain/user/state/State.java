@@ -13,6 +13,6 @@ public interface State {
         throw new UnsupportedOperationException("현재 상태에서는 카드를 추가할 수 없습니다.");
     }
 
-    void changeState(final BlackjackCards blackjackCards);
+    void changeState(State state, final BlackjackCards blackjackCards);
     boolean isFinished();
 }
