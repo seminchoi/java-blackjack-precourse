@@ -1,11 +1,15 @@
 package domain.user.state;
 
 import domain.blackjack.BlackjackCards;
-import domain.card.Card;
 import domain.card.CardDeck;
 
 public interface State {
-    default double getProfitRate() {
+    double BLACKJACK_PROFIT = 1.5;
+    double WIN_PROFIT = 1;
+    double DRAW_PROFIT = 0;
+    double LOSE_PROFIT = -1;
+
+    default double getProfitRate(final BlackjackCards playerHands, final BlackjackCards dealerHands) {
         throw new UnsupportedOperationException("현재 상태에서는 이익율을 계산할 수 없습니다.");
     }
 
