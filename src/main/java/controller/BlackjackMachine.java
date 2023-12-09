@@ -153,6 +153,7 @@ public class BlackjackMachine {
             final boolean intention = inputView.readIntention(player.getName());
             if(intention) {
                 player.addCard(cardDeck);
+                outputView.printUserStatus(new UserDto(player));
             }
             if(!intention) {
                 player.stay();
