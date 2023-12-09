@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class BlackjackCards {
+public class Hands {
     private final static int MAX_SCORE = 21;
     private final static int ACE_BONUS_SCORE = 10;
 
@@ -52,6 +52,7 @@ public class BlackjackCards {
     public boolean isBlackjack() {
         return calculateScore() == MAX_SCORE;
     }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }

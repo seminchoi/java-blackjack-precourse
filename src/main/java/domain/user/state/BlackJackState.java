@@ -1,10 +1,10 @@
 package domain.user.state;
 
-import domain.blackjack.BlackjackCards;
+import domain.blackjack.Hands;
 
 public class BlackJackState implements State {
     @Override
-    public double getProfitRate(BlackjackCards playerHands, BlackjackCards dealerHands) {
+    public double getProfitRate(Hands playerHands, Hands dealerHands) {
         if(dealerHands.isBlackjack()) {
             return DRAW_PROFIT;
         }

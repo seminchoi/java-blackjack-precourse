@@ -13,7 +13,7 @@ public class ResultDto {
     public ResultDto(final Dealer dealer) {
         userDto = new UserDto(
                 "딜러",
-                dealer.getCards().stream().map(CardDto::new).collect(Collectors.toList())
+                dealer.getHands().getCards().stream().map(CardDto::new).collect(Collectors.toList())
         );
         score = convertScore(dealer);
     }

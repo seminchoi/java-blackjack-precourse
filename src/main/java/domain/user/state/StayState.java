@@ -1,10 +1,10 @@
 package domain.user.state;
 
-import domain.blackjack.BlackjackCards;
+import domain.blackjack.Hands;
 
 public class StayState implements State {
     @Override
-    public double getProfitRate(final BlackjackCards playerHands, final BlackjackCards dealerHands) {
+    public double getProfitRate(final Hands playerHands, final Hands dealerHands) {
         if (!dealerHands.isBust() && playerHands.calculateScore() < dealerHands.calculateScore()) {
             return LOSE_PROFIT;
         }

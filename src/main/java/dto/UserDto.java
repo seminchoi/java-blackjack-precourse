@@ -2,7 +2,6 @@ package dto;
 
 import domain.user.Dealer;
 import domain.user.Player;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.StringJoiner;
@@ -24,7 +23,9 @@ public class UserDto {
 
     public UserDto(Player player) {
         this.name = player.getName();
-        this.cards = player.getCards().stream().map(CardDto::new).collect(Collectors.toList());
+        this.cards = player.getHands().getCards().stream()
+                .map(CardDto::new)
+                .collect(Collectors.toList());
     }
 
     @Override

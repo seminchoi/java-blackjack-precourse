@@ -1,29 +1,28 @@
 package domain.user.state;
 
-import domain.blackjack.BlackjackCards;
+import domain.blackjack.Hands;
 import domain.card.CardDeck;
+import domain.user.Participant;
 
 public class PlayingState implements State {
     @Override
-    public void addCard(CardDeck cardDeck, BlackjackCards blackjackCards) {
-        blackjackCards.add(cardDeck.handOut());
-        changeState(blackjackCards);
+    public void addCard(final Participant participant, final CardDeck cardDeck, final Hands hands) {
+        hands.add(cardDeck.handOut());
+        changeState(participant, hands);
     }
 
     @Override
-    public void stay() {
-        State curState = this;
-        curState = new StayState();
+    public void stay(final Participant participant) {
+        participant.setState(new StayState());
     }
 
     @Override
-    public void changeState(BlackjackCards blackjackCards) {
-        State curState = this;
-        if(blackjackCards.isBlackjack()) {
-            curState = new BlackJackState();
+    public void changeState(final Participant participant, final Hands hands) {
+        if(hands.isBlackjack()) {
+            participant.setState(new BlackJackState());
         }
-        if(blackjackCards.isBust()) {
-            curState = new BustState();
+        if(hands.isBust()) {
+            participant.setState(new BustState());
         }
     }
 
