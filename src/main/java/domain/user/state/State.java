@@ -13,14 +13,14 @@ public interface State {
         throw new UnsupportedOperationException("현재 상태에서는 이익율을 계산할 수 없습니다.");
     }
 
-    default void addCard(final State state, final CardDeck cardDeck, final BlackjackCards blackjackCards) {
+    default void addCard(final CardDeck cardDeck, final BlackjackCards blackjackCards) {
         throw new UnsupportedOperationException("현재 상태에서는 카드를 추가할 수 없습니다.");
     }
 
-    default void stay(State state) {
+    default void stay() {
         throw new UnsupportedOperationException("현재 상태에서는 Stay 할 수 없습니다.");
     }
-    default void changeState(State state, final BlackjackCards blackjackCards) {
+    default void changeState(final BlackjackCards blackjackCards) {
     }
 
     boolean isFinished();

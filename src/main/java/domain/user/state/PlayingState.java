@@ -5,23 +5,25 @@ import domain.card.CardDeck;
 
 public class PlayingState implements State {
     @Override
-    public void addCard(State state, CardDeck cardDeck, BlackjackCards blackjackCards) {
+    public void addCard(CardDeck cardDeck, BlackjackCards blackjackCards) {
         blackjackCards.add(cardDeck.handOut());
-        changeState(state, blackjackCards);
+        changeState(blackjackCards);
     }
 
     @Override
-    public void stay(State state) {
-        state = new StayState();
+    public void stay() {
+        State curState = this;
+        curState = new StayState();
     }
 
     @Override
-    public void changeState(State state, BlackjackCards blackjackCards) {
+    public void changeState(BlackjackCards blackjackCards) {
+        State curState = this;
         if(blackjackCards.isBlackjack()) {
-            state = new BlackJackState();
+            curState = new BlackJackState();
         }
         if(blackjackCards.isBust()) {
-            state = new BustState();
+            curState = new BustState();
         }
     }
 
